@@ -8,59 +8,95 @@ networks:
       config:
         - subnet: "${APP_NETWORK_POOL}"
 
-# volumes:
-#   habitat-config:
+volumes:
+  habitat-config:
+  mariadb-data:
+  mariadb-initdb:
+  mariadb-config:
 
-# No Secrets, Syntax Stub:
-# secrets:
-#   SECRET_NAME:
-#     file: ${SECRETS_DIR}/SECRET_NAME
 
+secrets:
+  MARIADB_ROOT_PASSWORD:
+    file: ${SECRETS_DIR}/MARIADB_ROOT_PASSWORD
 
 services:
 
-  # habitat-config-MODULENAME:
-  #   image: tschebbischeff/habitat-config:latest
-  #   container_name: ${APP_NAME_HOST}_habitat-config-MODULENAME
-  #   restart: no
-  #   env_file:
-  #     - ./.env
-  #     - path: ${ENV_DIR}/.env
-  #       required: false
-  #     - path: ${ENV_DIR}/habitat-config.env
-  #       required: false
-  #   environment:
-  #     MODULE_NAME: "MODULENAME"
-  #   networks:
-  #     internal:
-  #   volumes:
-  #     - habitat-config:/habitat-config/orchestration
-  #     - ./habitat-config:/habitat-config/source:ro
-
-  SERVICENAME:
-    image: alpine:latest
-    container_name: ${APP_NAME_HOST}_SERVICENAME
-    restart: unless-stopped
-    # expose:
-    #   - '1337'
+  habitat-config-thicket:
+    image: tschebbischeff/habitat-config:latest
+    container_name: ${APP_NAME_HOST}_habitat-config-thicket
+    restart: no
     env_file:
       - ./.env
       - path: ${ENV_DIR}/.env
         required: false
-      - path: ${ENV_DIR}/SERVICENAME.env
+      - path: ${ENV_DIR}/habitat-config.env
         required: false
     environment:
-      FOO: 'bar'
-    # volumes:
-    #   - /src:/dest
+      MODULE_NAME: "thicket"
     networks:
       internal:
-    # healthcheck:
-    #   test: [ "CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:1337/healthz" ]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 5
-    #   start_period: 10s
-    # depends_on:
-    #   habitat-config-MODULENAME:
-    #     condition: service_completed_successfully
+    volumes:
+      - habitat-config:/habitat-config/orchestration
+      - ./habitat-config:/habitat-config/source:ro
+      - mariadb-initdb:/habitat-config/target/mariadb/initdb
+
+  mariadb:
+    image: mariadb:lts
+    container_name: ${APP_NAME_HOST}_mariadb
+    restart: unless-stopped
+    expose:
+      - '3306'
+    env_file:
+      - ./.env
+      - path: ${ENV_DIR}/.env
+        required: false
+      - path: ${ENV_DIR}/mariadb.env
+        required: false
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: '/run/secrets/MARIADB_ROOT_PASSWORD'
+      TZ: '${TIMEZONE}'
+    secrets:
+      - MARIADB_ROOT_PASSWORD
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - mariadb-initdb:/docker-entrypoint-initdb.d:ro
+      - mariadb-config:/etc/mysql/conf.d:ro
+    networks:
+      internal:
+    healthcheck:
+      test: [ "CMD", "/healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      habitat-config-thicket:
+        condition: service_completed_successfully
+
+  adminer:
+    image: adminer:latest
+    container_name: ${APP_NAME_HOST}_adminer
+    restart: unless-stopped
+    expose:
+      - '8080'
+    env_file:
+      - ./.env
+      - path: ${ENV_DIR}/.env
+        required: false
+      - path: ${ENV_DIR}/adminer.env
+        required: false
+    environment:
+      ADMINER_DESIGN: 'dracula'
+      ADMINER_DEFAULT_SERVER: 'mysql'
+      ADMINER_PLUGINS: 'designs json-column'
+    networks:
+      internal:
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      mariadb:
+        condition: service_healthy

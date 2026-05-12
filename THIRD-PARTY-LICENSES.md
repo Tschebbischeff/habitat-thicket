@@ -24,4 +24,20 @@ The date used in the copyright notices in this file represents the year indicate
 * **Copyright Notice:** <COPYRIGHT_NOTICE>
 -->
 
-*This repository currently does not use any third-party software directly.*
+## MariaDB
+
+* **Project:** https://mariadb.org/
+* **Version:** Latest LTS
+* **In use since:** May 2026
+* **Source Code:** https://github.com/MariaDB/mariadb-docker
+* **License:** [GPL-2.0](https://github.com/MariaDB/mariadb-docker/blob/master/LICENSE)
+* **Copyright Notice:** Copyright (c) 2009, MariaDB Foundation
+
+## Adminer
+
+* **Project:** https://www.adminer.org/
+* **Version:** Latest
+* **In use since:** May 2026
+* **Source Code:** https://github.com/vrana/adminer/; https://github.com/TimWolla/docker-adminer
+* **License:** [GPL-2.0](https://github.com/vrana/adminer/blob/master/LICENSE)
+* **Copyright Notice:** Copyright (c) 2007 Jakub Vrána; Copyright (c) 2016, Tim Düsterhus

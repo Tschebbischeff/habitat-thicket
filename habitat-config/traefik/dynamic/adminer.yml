@@ -1,0 +1,20 @@
+# Documentation:
+# https://doc.traefik.io/traefik/reference/routing-configuration/dynamic-configuration-methods/
+# https://doc.traefik.io/traefik/reference/routing-configuration/http/tls/overview/
+
+http:
+  services:
+    svc_adminer-8080:
+      loadBalancer:
+        servers:
+          - url: 'http://{{ env "APP_NAME_HOST" }}_adminer:8080'
+  routers:
+    adminer-8080:
+      rule: 'Host(`adminer.{{ env "APP_HOST" }}`)'
+      service: svc_adminer-8080
+      entryPoints: ["websecure"]
+      middlewares:
+        - "cors-policy"
+        - "auth-proxy"
+      tls:
+        certResolver: porkbun-api

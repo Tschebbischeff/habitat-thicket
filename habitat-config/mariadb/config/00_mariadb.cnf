@@ -1,0 +1,5 @@
+# https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/configuring-mariadb/configuring-mariadb-with-option-files
+# https://mariadb.com/docs/server/server-management/variables-and-modes/server-system-variables
+
+[client-server]
+port=3306
