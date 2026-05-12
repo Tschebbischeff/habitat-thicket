@@ -17,6 +17,7 @@ fi
 
 number=1
 for PLUGIN in $ADMINER_PLUGINS; do
+    rm -f "plugins-enabled/*.php"
     if [ -f "plugins-provided/$PLUGIN.php" ]; then
         cp -f "plugins-provided/$PLUGIN.php" "plugins-enabled/$(printf "%03d" $number)-$PLUGIN.php"
     else
@@ -24,6 +25,9 @@ for PLUGIN in $ADMINER_PLUGINS; do
     fi
 	number="$(( number + 1 ))"
 done
+
+echo "Plugins enabled:"
+ls -la plugins-enabled
 
 # chown -R adminer:adminer /var/www/html
 
