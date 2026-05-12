@@ -92,7 +92,7 @@ services:
       ADMINER_DEFAULT_SERVER: 'mysql'
       ADMINER_PLUGINS: 'designs json-column'
     volumes:
-      - adminer-plugins:/var/www/html/plugins-enabled:ro
+      - adminer-plugins:/var/www/html/plugins-enabled
     networks:
       internal:
     healthcheck:
