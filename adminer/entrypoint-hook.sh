@@ -32,4 +32,5 @@ done
 
 touch .adminer-init || true
 
-exec gosu adminer "$@"
+# exec gosu adminer "$@"
+exec "$@"
