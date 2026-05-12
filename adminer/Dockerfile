@@ -10,4 +10,4 @@ RUN chown adminer:adminer /entrypoint-hook.sh
 
 USER adminer
 
-ENTRYPOINT ["/entrypoint-hook.sh", "docker-php-entrypoint"]
+ENTRYPOINT ["/entrypoint-hook.sh"]
