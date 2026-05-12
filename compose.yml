@@ -91,7 +91,7 @@ services:
     environment:
       ADMINER_DESIGN: 'dracula'
       ADMINER_DEFAULT_SERVER: '${APP_NAME_HOST}_mariadb'
-      ADMINER_PLUGINS: 'designs json-column'
+      ADMINER_PLUGINS: 'json-column'
     volumes:
       - adminer-plugins:/var/www/html/plugins-provided:ro
     networks:
