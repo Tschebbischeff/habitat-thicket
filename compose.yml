@@ -90,9 +90,9 @@ services:
     environment:
       ADMINER_DESIGN: 'dracula'
       ADMINER_DEFAULT_SERVER: 'mysql'
-      ADMINER_PLUGINS: 'designs json-column'
-    volumes:
-      - adminer-plugins:/var/www/html/plugins-enabled
+      ADMINER_PLUGINS: 'json-column' # designs
+    # volumes:
+    #   - adminer-plugins:/var/www/html/plugins-enabled
     networks:
       internal:
     healthcheck:
