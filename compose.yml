@@ -93,7 +93,7 @@ services:
       ADMINER_DEFAULT_SERVER: '${APP_NAME_HOST}_mariadb'
       ADMINER_PLUGINS: 'designs json-column'
     volumes:
-      - adminer-plugins:/var/www/html/plugins-enabled
+      - adminer-plugins:/var/www/html/plugins-provided:ro
     networks:
       internal:
     healthcheck:

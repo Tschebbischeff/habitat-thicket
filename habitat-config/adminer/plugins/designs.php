@@ -2,8 +2,8 @@
 require_once('plugins/designs.php');
 
 /**
-	* @param list<string> $designs URL in key, name in value
-	*/
+ * @param list<string> $designs URL in key, name in value
+**/
 return new AdminerDesigns(
 	$designs = [
         "designs/hever/adminer.css" => "hever",
