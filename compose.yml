@@ -13,6 +13,7 @@ volumes:
   mariadb-data:
   mariadb-initdb:
   mariadb-config:
+  adminer-plugins:
 
 
 secrets:
@@ -39,6 +40,7 @@ services:
       - habitat-config:/habitat-config/orchestration
       - ./habitat-config:/habitat-config/source:ro
       - mariadb-initdb:/habitat-config/target/mariadb/initdb
+      - adminer-plugins:/habitat-config/target/adminer/plugins
 
   mariadb:
     image: mariadb:lts
@@ -89,6 +91,8 @@ services:
       ADMINER_DESIGN: 'dracula'
       ADMINER_DEFAULT_SERVER: 'mysql'
       ADMINER_PLUGINS: 'designs json-column'
+    volumes:
+      - adminer-plugins:/var/www/html/plugins-enabled:ro
     networks:
       internal:
     healthcheck:
