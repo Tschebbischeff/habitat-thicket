@@ -10,4 +10,5 @@ RUN chown adminer:adminer /entrypoint-hook.sh
 
 USER adminer
 
-ENTRYPOINT ["/entrypoint-hook.sh"]
+ENTRYPOINT ["/entrypoint-hook.sh", "docker-php-entrypoint"]
+CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www/html" ]
