@@ -89,7 +89,7 @@ services:
         required: false
     environment:
       ADMINER_DESIGN: 'dracula'
-      ADMINER_DEFAULT_SERVER: 'mysql'
+      ADMINER_DEFAULT_SERVER: '${APP_NAME_HOST}_mariadb'
       ADMINER_PLUGINS: 'json-column' # designs
     # volumes:
     #   - adminer-plugins:/var/www/html/plugins-enabled
