@@ -21,7 +21,7 @@ fi
 number=1
 for PLUGIN in $ADMINER_PLUGINS; do
     if [ -f "plugins-provided/$PLUGIN.php" ]; then
-        cp -a "plugins-provided/$PLUGIN.php" "plugins-enabled/$(printf "%03d" $number)-$PLUGIN.php"
+        cp -f "plugins-provided/$PLUGIN.php" "plugins-enabled/$(printf "%03d" $number)-$PLUGIN.php"
     else
 	    php plugin-loader.php "$PLUGIN" >"plugins-enabled/$(printf "%03d" $number)-$PLUGIN.php"
     fi
