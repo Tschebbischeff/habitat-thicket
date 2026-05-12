@@ -64,7 +64,7 @@ services:
     networks:
       internal:
     healthcheck:
-      test: [ "CMD", "/healthcheck.sh", "--connect", "--innodb_initialized" ]
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
       interval: 30s
       timeout: 10s
       retries: 5
