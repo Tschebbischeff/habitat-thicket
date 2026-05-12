@@ -5,9 +5,6 @@
 set -e
 
 echo "Customized entrypoint started."
-ls -la .
-ls -la ./plugins-provided
-ls -la ./plugins-enabled
 
 if [ -n "$ADMINER_DESIGN" ]; then
 	# Only create link on initial start, to ensure that explicit changes to
