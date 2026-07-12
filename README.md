@@ -18,11 +18,17 @@ You can check out all officially available modules [here](https://github.com/Tsc
 
 ## Module Features
 
-![TODO](https://img.shields.io/badge/TODO-Coming_Soon_(TM)-red?style=flat)
+[![MariaDB](https://img.shields.io/badge/MariaDB-_?style=flat&logo=mariadb&logoColor=003545&logoSize=auto&color=gray&labelColor=gray)](https://mariadb.org/)
+[![Adminer](https://img.shields.io/badge/Adminer-_?style=flat&logo=adminer&logoColor=34567C&logoSize=auto&color=gray&labelColor=gray)](https://www.adminer.org/)
+
+ - **Relational Database** \
+ Provides MariaDB as a relational database to persistently store data from other modules.
+ - **Administration Interface** \
+ Provides an interactive web interface through Adminer allowing reading and writing to relational databases deployed via this or other modules.
 
 ### Planned
 
-![TODO](https://img.shields.io/badge/TODO-Coming_Soon_(TM)-red?style=flat)
+![No Features Planned](https://img.shields.io/badge/_-No_Planned_Features-green?style=flat)
 
 ## Getting Started
 
