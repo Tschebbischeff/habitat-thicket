@@ -6,10 +6,12 @@ echo "Customized entrypoint started."
 "$@" &
 
 # Wait for database to be initialized
+echo "Waiting for MariaDB to initialize."
 while ! healthcheck.sh --connect --innodb_initialized >/dev/null; do
     sleep 5
 done
 
+echo "Starting provisioning of MariaDB..."
 if [ -d "/mariadb-provisioning" ]; then
     cd "/mariadb-provisioning" || exit 1
     MARIADB_ROOT_PASSWORD="$(cat "/run/secrets/MARIADB_ROOT_PASSWORD")"
@@ -64,5 +66,6 @@ EOF
     done
 fi
 
+echo "Provisioning of MariaDB done, waiting for container exit..."
 # shellcheck disable=SC2046 # Word splitting intentional
 wait $(jobs -p)
