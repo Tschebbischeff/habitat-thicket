@@ -7,7 +7,7 @@ echo "Customized entrypoint started."
 
 # Wait for database to be initialized
 echo "Waiting for MariaDB to initialize."
-while ! healthcheck.sh --connect --innodb_initialized >/dev/null; do
+while ! healthcheck.sh --connect --innodb_initialized >/dev/null 2>/dev/null; do
     sleep 5
 done
 
