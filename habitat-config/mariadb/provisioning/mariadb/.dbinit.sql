@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `habitat_test`
-USE `habitat_test`
+CREATE DATABASE IF NOT EXISTS `habitat_test`;
+USE `habitat_test`;
 
 CREATE TABLE IF NOT EXISTS `Test` (
     ID INT AUTO_INCREMENT PRIMARY KEY,
