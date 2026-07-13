@@ -109,3 +109,4 @@ fi
 echo "Provisioning of MariaDB done, waiting for container exit..."
 # shellcheck disable=SC2046 # Word splitting intentional
 wait $(jobs -p)
+echo "Container exited, goodbye."
