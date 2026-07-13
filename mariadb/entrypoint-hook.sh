@@ -2,6 +2,8 @@
 
 echo "Customized entrypoint started."
 
+exec "$@"
+
 # Execute in background before trying to provision
 "$@" &
 
