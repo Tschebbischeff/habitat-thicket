@@ -35,9 +35,12 @@ exec_upgrade() {
 exec_upgrade_if_exists() {
     if [ -f "./$1/$2.sql" ]; then
         exec_upgrade "./$1/$2.sql"
+        return "$?"
     elif [ -f "./$1/$2.sh" ]; then
         exec_upgrade "./$1/$2.sh"
+        return "$?"
     fi
+    return 1
 }
 
 echo "Starting provisioning of MariaDB..."
@@ -61,10 +64,14 @@ EOF
         currentSqlVersion="$(mariadb -u root --password="$MARIADB_ROOT_PASSWORD" "habitat_metadata" -NBe 'SELECT `Version` FROM `HabitatApps` WHERE `Name` = "'"$appName"'";')"
         if [ -z "$currentSqlVersion" ]; then
             echo "App '$appName' is not registered yet, initializing..."
-            exec_upgrade_if_exists "$appName" ".dbinit"
-            # shellcheck disable=SC2016 # Using backticks inside single quotes is intentional
-            mariadb -u root --password="$MARIADB_ROOT_PASSWORD" "habitat_metadata" -e 'INSERT INTO `HabitatApps` (`Name`, `Version`) VALUES ("'"$appName"'", 0);'
-            currentSqlVersion="0"
+            if exec_upgrade_if_exists "$appName" ".dbinit"; then
+                # shellcheck disable=SC2016 # Using backticks inside single quotes is intentional
+                mariadb -u root --password="$MARIADB_ROOT_PASSWORD" "habitat_metadata" -e 'INSERT INTO `HabitatApps` (`Name`, `Version`) VALUES ("'"$appName"'", 0);'
+                currentSqlVersion="0"
+            else
+                echo "Initialization failed. Continuing with next app."
+                continue
+            fi
         else
             echo "App '$appName' is registered and currently on version '$currentSqlVersion'."
         fi
