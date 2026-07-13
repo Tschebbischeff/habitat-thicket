@@ -11,7 +11,7 @@ networks:
 volumes:
   habitat-config:
   mariadb-data:
-  mariadb-initdb:
+  mariadb-provisioning:
   mariadb-config:
   adminer-plugins:
 
@@ -39,11 +39,12 @@ services:
     volumes:
       - habitat-config:/habitat-config/orchestration
       - ./habitat-config:/habitat-config/source:ro
-      - mariadb-initdb:/habitat-config/target/mariadb/initdb
+      - mariadb-provisioning:/habitat-config/target/mariadb/provisioning
       - adminer-plugins:/habitat-config/target/adminer/plugins
 
   mariadb:
-    image: mariadb:lts
+    build:
+      context: ./mariadb
     container_name: ${APP_NAME_HOST}_mariadb
     restart: unless-stopped
     expose:
@@ -61,7 +62,7 @@ services:
       - MARIADB_ROOT_PASSWORD
     volumes:
       - mariadb-data:/var/lib/mysql
-      - mariadb-initdb:/docker-entrypoint-initdb.d:ro
+      - mariadb-provisioning:/mariadb-provisioning
       - mariadb-config:/etc/mysql/conf.d:ro
     networks:
       internal:
