@@ -40,7 +40,7 @@ exec_upgrade_if_exists() {
         exec_upgrade "./$1/$2.sh"
         return "$?"
     fi
-    return 1
+    return 0
 }
 
 echo "Starting provisioning of MariaDB..."
@@ -65,6 +65,7 @@ EOF
         if [ -z "$currentSqlVersion" ]; then
             echo "App '$appName' is not registered yet, initializing..."
             if exec_upgrade_if_exists "$appName" ".dbinit"; then
+                echo "Initialization successful."
                 # shellcheck disable=SC2016 # Using backticks inside single quotes is intentional
                 mariadb -u root --password="$MARIADB_ROOT_PASSWORD" "habitat_metadata" -e 'INSERT INTO `HabitatApps` (`Name`, `Version`) VALUES ("'"$appName"'", 0);'
                 currentSqlVersion="0"
@@ -93,6 +94,7 @@ EOF
             echo "Upgrading app '$appName' to version '$toVersion'..."
             # shellcheck disable=SC1090 # File existence has been checked
             if exec_upgrade "./$appName/$file"; then
+                echo "Upgrade successful."
                 # shellcheck disable=SC2016 # Using backticks inside single quotes is intentional
                 mariadb -u root --password="$MARIADB_ROOT_PASSWORD" "habitat_metadata" -e 'UPDATE `HabitatApps` SET `Version`='"$toVersion"' WHERE `Name`="'"$appName"'";'
             else
