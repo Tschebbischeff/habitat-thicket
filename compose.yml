@@ -39,6 +39,7 @@ services:
     volumes:
       - habitat-config:/habitat-config/orchestration
       - ./habitat-config:/habitat-config/source:ro
+      - mariadb-config:/habitat-config/target/mariadb/config
       - mariadb-provisioning:/habitat-config/target/mariadb/provisioning
       - adminer-plugins:/habitat-config/target/adminer/plugins
 
