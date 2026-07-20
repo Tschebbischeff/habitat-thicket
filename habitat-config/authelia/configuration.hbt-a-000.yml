@@ -1,0 +1,5 @@
+access_control:
+  rules:
+    - domain: 'adminer.{{ env "APP_HOST" }}'
+      subject: 'group:adminer_users'
+      policy: one_factor
