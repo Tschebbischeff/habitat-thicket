@@ -58,7 +58,6 @@ services:
         required: false
     environment:
       MARIADB_ROOT_PASSWORD_FILE: '/run/secrets/MARIADB_ROOT_PASSWORD'
-      TZ: '${TIMEZONE}'
     secrets:
       - MARIADB_ROOT_PASSWORD
     volumes:
