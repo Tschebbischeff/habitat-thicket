@@ -2,7 +2,7 @@
 ![Development: Prototyping](https://img.shields.io/badge/Development-Prototyping-orange?style=flat)
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&color=yellow&style=flat&url=https%3A%2F%2Fraw.githubusercontent.com%2Ftschebbischeff%2Fhabitat-thicket%2Frefs%2Fheads%2Fmain%2Fmetadata.json&query=%24.version)
 
-# Habitat: Module Template
+# Habitat: Thicket
 
 > [!CAUTION]
 > **🚧 This project is currently under heavy development, any information may be subject to change. 🚧**
