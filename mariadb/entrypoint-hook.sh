@@ -2,6 +2,16 @@
 
 echo "Customized entrypoint started."
 
+[ -z "$UID" ] && UID="0"
+
+tmpCronFile="$(mktemp)"
+crontab -u "${UID}" -l 2>/dev/null | grep -v '/backup\.sh$' >"$tmpCronFile"
+echo "${MARIADB_BACKUP_SCHEDULE} /backup.sh" >>"$tmpCronFile"
+crontab -u "${UID}" "$tmpCronFile" || exit 1
+rm "$tmpCronFile"
+
+cron
+
 # Execute in background before trying to provision
 "$@" &
 

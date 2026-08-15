@@ -64,6 +64,7 @@ services:
       - mariadb-data:/var/lib/mysql
       - mariadb-provisioning:/mariadb-provisioning
       - mariadb-config:/etc/mysql/conf.d:ro
+      - ${VOLUME_DIR}/mariadb-backups:/backups
     networks:
       internal:
     healthcheck:
