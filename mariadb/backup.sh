@@ -32,4 +32,10 @@ exitCode="$?"; [ "$exitCode" -ne "0" ] && backupFailed "prepare" "$exitCode"
 echo "Cleaning up backups older than $RETENTION_DAYS days..."
 find "/backups/$(basename "$BASE_PATH")" -mindepth 1 -maxdepth 1 -type d -mtime +"$RETENTION_DAYS" -exec rm -rf {} +
 
-{ [ -z "$ANY_FAILURE" ] && echo "Backup job completed successfully."; } || { echo "Backup job caused errors." && exit 1; }
+{
+    [ -z "$ANY_FAILURE" ] && echo "Backup job completed successfully.";
+} || {
+    echo "Backup job caused errors."
+    rm -rf "$BACKUP_DIR"
+    exit 1
+}
