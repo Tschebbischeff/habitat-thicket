@@ -2,12 +2,12 @@
 
 echo "Customized entrypoint started."
 
-[ -z "$UID" ] && UID="0"
+CRONTAB_USER="root"
 
 tmpCronFile="$(mktemp)"
-crontab -u "$(id -nu "${UID}")" -l 2>/dev/null | grep -v '/backup\.sh$' >"$tmpCronFile"
+crontab -u "$CRONTAB_USER" -l 2>/dev/null | grep -v '/backup\.sh$' >"$tmpCronFile"
 echo "${MARIADB_BACKUP_SCHEDULE} /backup.sh" >>"$tmpCronFile"
-crontab -u "$(id -nu "${UID}")" "$tmpCronFile" || exit 1
+crontab -u "$CRONTAB_USER" "$tmpCronFile" || exit 1
 rm "$tmpCronFile"
 
 cron
