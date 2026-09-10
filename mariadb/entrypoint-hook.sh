@@ -14,6 +14,16 @@ cron
 
 # Execute in background before trying to provision
 "$@" &
+mainPID="$!"
+propagate_signal() {
+  if [ -n "$mainPID" ]; then
+    kill -"$1" "$mainPID" 2>/dev/null
+  fi
+}
+trap 'propagate_signal HUP' HUP
+trap 'propagate_signal INT' INT
+trap 'propagate_signal QUIT' QUIT
+trap 'propagate_signal TERM' TERM
 
 # Wait for database to be initialized
 echo "Waiting for MariaDB to initialize."
@@ -118,5 +128,7 @@ fi
 
 echo "Provisioning of MariaDB done, waiting for container exit..."
 # shellcheck disable=SC2046 # Word splitting intentional
-wait $(jobs -p)
-echo "Container exited, goodbye."
+wait "$mainPID"
+exitCode="$?"
+echo "Main process exited with code '$exitCode'."
+exit "$exitCode"
