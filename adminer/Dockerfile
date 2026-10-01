@@ -1,4 +1,5 @@
-FROM adminer:latest
+ARG ADMINER_VERSION
+FROM adminer:${ADMINER_VERSION}
 
 USER root
 #

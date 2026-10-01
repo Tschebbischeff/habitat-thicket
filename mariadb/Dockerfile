@@ -1,4 +1,5 @@
-FROM mariadb:lts
+ARG MARIADB_VERSION
+FROM mariadb:${MARIADB_VERSION}
 
 RUN apt update && apt install -y cron grep; rm -rf /var/lib/apt/lists/*
 

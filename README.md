@@ -105,8 +105,10 @@ SECRETS_DIR="/run/secrets"
 
 | Name | Description | Example | Default |
 | :-- | :-- | :-- | :-- |
+| `MARIADB_VERSION` | Tag for the [MariaDB docker image](https://hub.docker.com/_/mariadb). | `13` | `lts` |
 | `MARIADB_BACKUP_SCHEDULE` | A cron schedule in the form of `M H DoM MoY DoW`, determining when the MariaDB database is backed up to `/backup`. | `30 23 * * *` | `30 1 * * *` |
 | `MARIADB_BACKUP_RETENTION_DAYS` | The amount of time in days since a MariaDB backup has been last modified until it is deleted. | `7` | `2` |
+| `ADMINER_VERSION` | Tag for the [Adminer docker image](https://hub.docker.com/_/adminer). | `5-standalone` | `latest` |
 
 ### Secrets
 

@@ -46,6 +46,8 @@ services:
   mariadb:
     build:
       context: ./mariadb
+      args:
+        MARIADB_VERSION: "${MARIADB_VERSION:?}"
     container_name: ${APP_NAME_HOST}_mariadb
     restart: unless-stopped
     expose:
@@ -80,6 +82,8 @@ services:
   adminer:
     build:
       context: ./adminer
+      args:
+        ADMINER_VERSION: "${ADMINER_VERSION:?}"
     container_name: ${APP_NAME_HOST}_adminer
     restart: unless-stopped
     expose:
